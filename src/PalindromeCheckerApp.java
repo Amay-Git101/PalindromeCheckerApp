@@ -1,91 +1,72 @@
 /**
  * ==========================================================
- * MAIN CLASS – UseCase6PalindromeCheckerApp
+ * MAIN CLASS – UseCase7PalindromeCheckerApp
  * ==========================================================
  *
- * Use Case 6: Queue + Stack Fairness Check
+ * Use Case 7: Deque Based Optimized Palindrome Checker
  *
  * Description:
- * This class demonstrates palindrome validation using
- * two different data structures:
+ * This class validates a palindrome using a Deque
+ * (Double Ended Queue).
  *
- * - Queue (FIFO - First In First Out)
- * - Stack (LIFO - Last In First Out)
+ * Characters are inserted into the deque and then
+ * compared by removing elements from both ends:
  *
- * Characters are inserted into both structures and then
- * compared by removing from the front of the queue and
- * the top of the stack.
+ * - removeFirst()
+ * - removeLast()
  *
- * If all characters match, the input string is confirmed
- * as a palindrome.
+ * This avoids reversing the string and provides an
+ * efficient front-to-back comparison approach.
  *
- * This use case helps understand how FIFO and LIFO
- * behaviors can be combined for symmetric comparison.
+ * This use case demonstrates optimal bidirectional
+ * traversal using Deque.
  *
  * @author Developer
- * @version 6.0
+ * @version 7.0
  */
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class PalindromeCheckerApp {
 
     /**
-     * Application entry point for UC6.
+     * Application entry point for UC7.
      * @param args Command-line arguments
      */
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+        // Define the input string
+        String input = "refer";
 
-        System.out.println("=======================================");
-        System.out.println("   UC6: Queue + Stack Palindrome Check ");
-        System.out.println("=======================================");
-        System.out.print("Enter a string: ");
+        System.out.println("Input : " + input);
 
-        String input = scanner.nextLine();
-
-        // Preprocessing: remove spaces and convert to lowercase
+        // Preprocessing (optional but good practice)
         String processedInput = input.replaceAll("\\s+", "").toLowerCase();
 
-        // Initialize Queue (FIFO)
-        Queue<Character> queue = new LinkedList<>();
+        // Create a Deque to store characters
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Initialize Stack (LIFO)
-        Stack<Character> stack = new Stack<>();
-
-        // Enqueue and Push characters
-        for (int i = 0; i < processedInput.length(); i++) {
-            char ch = processedInput.charAt(i);
-            queue.add(ch);     // Enqueue
-            stack.push(ch);    // Push
+        // Add each character to the deque
+        for (char c : processedInput.toCharArray()) {
+            deque.addLast(c);   // Insert at rear
         }
 
+        // Flag to track palindrome result
         boolean isPalindrome = true;
 
-        // Compare dequeue vs pop
-        while (!queue.isEmpty()) {
-            char fromQueue = queue.remove(); // Dequeue (FIFO)
-            char fromStack = stack.pop();    // Pop (LIFO)
+        // Continue comparison while more than one element exists
+        while (deque.size() > 1) {
 
-            if (fromQueue != fromStack) {
+            char first = deque.removeFirst(); // Remove from front
+            char last = deque.removeLast();   // Remove from rear
+
+            if (first != last) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Output result
-        System.out.println("---------------------------------------");
-        if (isPalindrome) {
-            System.out.println("Result: \"" + input + "\" is a PALINDROME.");
-        } else {
-            System.out.println("Result: \"" + input + "\" is NOT a palindrome.");
-        }
-        System.out.println("---------------------------------------");
-
-        scanner.close();
+        System.out.println("Is Palindrome? : " + isPalindrome);
     }
 }
