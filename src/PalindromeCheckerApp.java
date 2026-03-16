@@ -1,34 +1,40 @@
+import java.util.Scanner;
+
 public class PalindromeCheckerApp {
-
-    // Recursive method to check if a string is a palindrome
-    static boolean isPalindrome(String str, int start, int end) {
-
-        // Base condition:
-        // If start index crosses end index, all characters matched
-        if (start >= end) {
-            return true;
-        }
-
-        // If characters at start and end don't match, it's not a palindrome
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call:
-        // Move start forward and end backward
-        return isPalindrome(str, start + 1, end - 1);
-    }
 
     public static void main(String[] args) {
 
-        // Input string to test
-        String input = "level";
+        Scanner sc = new Scanner(System.in);
 
-        // Call the recursive method
-        boolean result = isPalindrome(input, 0, input.length() - 1);
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
 
-        // Print the result
-        System.out.println("Input: " + input);
-        System.out.println("Is Palindrome?: " + result);
+        // Step 1: Normalize the string
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+
+        // Step 2: Convert to char array
+        char[] arr = normalized.toCharArray();
+
+        // Step 3: Two pointer comparison
+        int start = 0;
+        int end = arr.length - 1;
+        boolean isPalindrome = true;
+
+        while(start < end){
+            if(arr[start] != arr[end]){
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
+        }
+
+        // Step 4: Result
+        if(isPalindrome)
+            System.out.println("Palindrome");
+        else
+            System.out.println("Not a Palindrome");
+
+        sc.close();
     }
 }
