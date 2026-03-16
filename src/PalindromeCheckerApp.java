@@ -1,39 +1,28 @@
-
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
 
-    /**
-     * Application entry point for UC7.
-     * @param args Command-line arguments
-     */
     public static void main(String[] args) {
 
         // Define the input string
-        String input = "refer";
+        String input = "level";
 
-        System.out.println("Input : " + input);
+        // Create a LinkedList to store characters
+        LinkedList<Character> list = new LinkedList<>();
 
-        // Preprocessing (optional but good practice)
-        String processedInput = input.replaceAll("\\s+", "").toLowerCase();
-
-        // Create a Deque to store characters
-        Deque<Character> deque = new ArrayDeque<>();
-
-        // Add each character to the deque
-        for (char c : processedInput.toCharArray()) {
-            deque.addLast(c);   // Insert at rear
+        // Add each character to the linked list
+        for (char c : input.toCharArray()) {
+            list.add(c);
         }
 
-        // Flag to track palindrome result
+        // Flag to track palindrome state
         boolean isPalindrome = true;
 
-        // Continue comparison while more than one element exists
-        while (deque.size() > 1) {
+        // Compare until only one or zero elements remain
+        while (list.size() > 1) {
 
-            char first = deque.removeFirst(); // Remove from front
-            char last = deque.removeLast();   // Remove from rear
+            char first = list.removeFirst();
+            char last = list.removeLast();
 
             if (first != last) {
                 isPalindrome = false;
@@ -41,6 +30,8 @@ public class PalindromeCheckerApp {
             }
         }
 
+        // Print result
+        System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + isPalindrome);
     }
 }
